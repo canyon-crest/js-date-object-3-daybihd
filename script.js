@@ -52,9 +52,9 @@ document.getElementById("warmUpDate").innerHTML=dayName;
 //          Display it in the element with ID "myDate"
 let date = new Date();
 let month = date.getMonth()+1;
-let dayofmonth = date.getDay();
+let dayofmonth = date.getDate();
 let year = date.getFullYear();
-let fulldate = month+"/"+day+"/"+year;
+let fulldate = month+"/"+dayofmonth+"/"+year;
 document.getElementById("myDate").innerHTML=fulldate;
 
 // ============================================
@@ -74,7 +74,15 @@ document.getElementById("myDate").innerHTML=fulldate;
 //          b) Calculate elapsed seconds: (currentTime - startTime) / 1000
 //          c) Display the elapsed time using .toFixed(3)
 //             in the element with ID "myTimer"
+let startTime = new Date().getTime();
 
+let timerID = setInterval(function(){
+    let currentTime = new Date().getTime();
+    let timeElapsed = (currentTime-startTime)/1000;
+    document.getElementById("myTimer").innerHTML=timeElapsed.toFixed(3);
+
+
+},10)
 
 // ============================================
 //  PART 3: Start/Stop Toggle Button
@@ -100,3 +108,27 @@ document.getElementById("myDate").innerHTML=fulldate;
 //             - Start a new setInterval (same as STEP 12)
 //             - Change button innerHTML to "Stop"
 //             - Set running to true
+let running = true;
+document.getElementById("myBtn").addEventListener("click",function(){
+    if(running==true){
+        clearInterval(timerID);
+        document.getElementById("myBtn").innerHTML = "Start";
+        running = false;
+    }
+    else if(running == false){
+        let startTime = new Date().getTime();
+        timerID = setInterval(function(){
+            currentTime = new Date().getTime();
+            timeElapsed = (currentTime-startTime)/1000;
+            document.getElementById("myTimer").innerHTML = timeElapsed.toFixed(3);
+
+
+        },10)
+
+
+        document.getElementById("myBtn").innerHTML = "Stop";
+        running = true;
+    }
+
+
+})
